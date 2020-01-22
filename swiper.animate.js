@@ -41,14 +41,14 @@ const swiperAnimate = (swiper) => {
                 el.classList.add(effect);
                 el.setAttribute('effect', effect);
                 let style = el.getAttribute('style');
-                let duration = animation.duration;
-                let delay = animation.delay;
+                let duration = typeof animation.duration === 'string' ? animation.duration : animation.duration + 's';
+                let delay = typeof animation.delay === 'string' ? animation.delay : animation.delay + 's';
                 let loop = animation.loop;
                 if (loop === 0 || loop === '0') {
                     loop = 'infinite';
                 }
-                duration && (style = style + "animation-duration:" + duration + "s;-webkit-animation-duration:" + duration + "s;")
-                delay && (style = style + "animation-delay:" + delay + "s;-webkit-animation-delay:" + delay + "s;")
+                duration && (style = style + "animation-duration:" + duration + ";-webkit-animation-duration:" + duration + ";")
+                delay && (style = style + "animation-delay:" + delay + ";-webkit-animation-delay:" + delay + ";")
                 loop && (style = style + "animation-iteration-count:" + loop + ";-webkit-animation-iteration-count:" + loop + ";")
                 el.setAttribute("style", style);
                 // 监听动画执行完毕函数
