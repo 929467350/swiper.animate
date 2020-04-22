@@ -1,7 +1,6 @@
 /**
- * @author      孟繁波
+ * @author      929467350
  * @variation   1.0.0
- * @qq          929467350
  * @date        2020年1月20日
  * @github      https://github.com/929467350/
  * @example     https://929467350.github.io/swiper.animate/example.html
