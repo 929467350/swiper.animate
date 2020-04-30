@@ -16,18 +16,11 @@ const swiperAnimateCache = (swiper) => {
         }
     }
 }
-// 动画执行完毕重置当前节点样式清除动画
-const clearSwiperAnimate = (el, swiper) => {
-    let ani = el.getAttribute('effect');
-    let style = el.getAttribute('swiper-animate-style-cache');
-    ani && el.classList.remove(ani), el.removeAttribute('effect');
-    el.setAttribute("style", style);
-    el.style.visibility = "visible";
-}
-
 const swiperAnimate = (swiper) => {
     // 初始化或页面发生变化时清除所有待执行节点动画并且隐藏节点
     for (let ani = document.querySelectorAll('.ani'), j = 0; j < ani.length; j++) {
+        ani[j].style['animation-name'] = "";
+        ani[j].style['animation-delay'] = "";
         ani[j].style['visibility'] = "hidden";
         // 如果动画是无限循环，则不会触发下方回调 所以页面发生变化时清除animation-duration和animation-iteration-count
         ani[j].style['animation-duration'] = '';
@@ -37,11 +30,10 @@ const swiperAnimate = (swiper) => {
         const run = (el, animation) => {
             return new Promise(resolve => {
                 let effect = animation.value;
-                el.classList.add(effect);
-                el.setAttribute('effect', effect);
                 let style = el.getAttribute('style');
-                let duration = typeof animation.duration === 'string' ? animation.duration : animation.duration + 's';
-                let delay = typeof animation.delay === 'string' ? animation.delay : animation.delay + 's';
+                style = "animation-name:" + effect + ";-webkit-animation-name:" + effect + ';';
+                let duration = typeof animation.duration === 'string' ? animation.duration + 's' : animation.duration + 's';
+                let delay = typeof animation.delay === 'string' ? animation.delay + 's' : animation.delay + 's';
                 let loop = animation.loop;
                 if (loop === 0 || loop === '0') {
                     loop = 'infinite';
@@ -52,10 +44,10 @@ const swiperAnimate = (swiper) => {
                 el.setAttribute("style", style);
                 // 监听动画执行完毕函数
                 let resolveFn = () => {
+                    resolve();
                     el.removeEventListener('animationend', resolveFn, false);
                     el.removeEventListener('animationcancel', resolveFn, false);
-                    clearSwiperAnimate(el, swiper);
-                    resolve();
+                    el.style.visibility = "visible";
                 }
                 el.addEventListener('animationend', resolveFn, false)
                 el.addEventListener('animationcancel', resolveFn, false);
