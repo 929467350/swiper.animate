@@ -8,7 +8,6 @@ demo：<a href='https://929467350.github.io/swiper.animate/example.html'>传送�
 <pre>
 <code>
 let swiperAnimate=window.swiperAnimate;
-let swiperAnimateCache=window.swiperAnimateCache;
 </code>
 </pre>
 <p>
@@ -19,7 +18,6 @@ let swiperAnimateCache=window.swiperAnimateCache;
 let mySwiper = new Swiper ('.swiper-container', {
     on:{
       init: function(){
-        swiperAnimateCache(this); //隐藏动画元素 
         swiperAnimate(this); //初始化完成开始动画
       }, 
       slideChange: function(){ 
